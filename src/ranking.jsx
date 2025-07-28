@@ -25,8 +25,8 @@ export function Ranking() {
         </tr>
       </thead>
       <tbody>
-        {rankingList.map((team) =>
-          <tr>
+        {rankingList.map((team, index) =>
+          <tr key={index} >
             <th scope="row">{team.equipe.short_name}</th>
             <td>{team.point_count}</td>
             <td>{team.goals_for_count - team.goals_against_count}</td>

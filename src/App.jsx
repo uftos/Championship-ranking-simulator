@@ -1,4 +1,5 @@
 import './App.css'
+import React from 'react';
 
 import { DistrictPicker, ChampionshipPicker, PoolPicker } from './districtPicker';
 import { Ranking } from './ranking.jsx';
