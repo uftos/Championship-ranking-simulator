@@ -20,5 +20,6 @@ There is a cors policy on the data so you need to launch a cors proxy
 - Edit score function
 - Choose the day to go back in time
 - Button to put same score on the outward and return journey
+- Button reinitialize
 - stylizing with a react componant librairy
 
