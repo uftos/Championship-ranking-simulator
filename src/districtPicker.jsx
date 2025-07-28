@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export function DistrictPicker() {
   const districtsInfoRequest = async () => {
-    const response = await fetch('http://localhost:8010/proxy/api/cdgs');
+    const response = await fetch("http://localhost:8010/proxy/api/cdgs");
     const json = await response.json();
     return json;
   };
@@ -16,21 +16,21 @@ export function DistrictPicker() {
   }, []);
   return (
     <>
-    <h1> Choisissez le votre district </h1>
-    <select>
-    {districtList.map((district) => (
-    <option key={district.cg_no}>
-      {district.name}
-    </option>
-    ))}
-    </select>
+      <h1> Choisissez le votre district </h1>
+      <select>
+        {districtList.map((district) => (
+          <option key={district.cg_no}>{district.name}</option>
+        ))}
+      </select>
     </>
   );
 }
 
 export function ChampionshipPicker() {
   const championshipInfoRequest = async () => {
-    const response = await fetch('http://localhost:8010/proxy/api/compets?cg_no=24&competition_type=CH&groups[]=compet_light');
+    const response = await fetch(
+      "http://localhost:8010/proxy/api/compets?cg_no=24&competition_type=CH&groups[]=compet_light",
+    );
     const json = await response.json();
     return json;
   };
@@ -44,21 +44,21 @@ export function ChampionshipPicker() {
   }, []);
   return (
     <>
-    <h1> Choisissez votre championnat </h1>
-    <select>
-    {championshipList.map((district) => (
-    <option key={district.cg_no}>
-      {district.name}
-    </option>
-    ))}
-    </select>
+      <h1> Choisissez votre championnat </h1>
+      <select>
+        {championshipList.map((district) => (
+          <option key={district.cg_no}>{district.name}</option>
+        ))}
+      </select>
     </>
   );
 }
 
 export function PoolPicker() {
   const poolInfoRequest = async () => {
-    const response = await fetch('http://localhost:8010/proxy/api/compets?cg_no=24&competition_type=CH&groups[]=compet_light');
+    const response = await fetch(
+      "http://localhost:8010/proxy/api/compets?cg_no=24&competition_type=CH&groups[]=compet_light",
+    );
     const json = await response.json();
     return json;
   };
@@ -72,14 +72,12 @@ export function PoolPicker() {
   }, []);
   return (
     <>
-    <h1> Choisissez votre poule </h1>
-    <select>
-    {poolList.map((pool) => (
-    <option key={pool.cg_no}>
-      {pool.name}
-    </option>
-    ))}
-    </select>
+      <h1> Choisissez votre poule </h1>
+      <select>
+        {poolList.map((pool) => (
+          <option key={pool.cg_no}>{pool.name}</option>
+        ))}
+      </select>
     </>
   );
 }
