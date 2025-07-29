@@ -6,10 +6,10 @@ import {
   ChampionshipPicker,
   PoolPicker,
 } from "./districtPicker";
-import { Ranking } from "./ranking.jsx";
+import { Ranking } from "./ranking";
 import { Games } from "./games.jsx";
 
-function App() {
+export default function App() {
   return (
     <>
       <DistrictPicker />
@@ -25,5 +25,3 @@ function App() {
     </>
   );
 }
-
-export default App;

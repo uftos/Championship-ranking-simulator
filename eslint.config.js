@@ -1,4 +1,4 @@
-import js from "@eslint/js";
+import ts from "typescript-eslint";
 import globals from "globals";
 import pluginReact from "eslint-plugin-react";
 import { defineConfig } from "eslint/config";
@@ -11,9 +11,9 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 
 const config = defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
-    plugins: { js },
-    extends: ["js/recommended"],
+    files: ["**/*.{ts,tsx}"],
+    plugins: { ts },
+    extends: ["ts/recommended"],
     languageOptions: { globals: globals.browser },
   },
   pluginReact.configs.flat.recommended,

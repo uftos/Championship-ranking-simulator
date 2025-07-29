@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 
+interface teamRanking {
+  equipe: {
+    short_name: string;
+  };
+  point_count: number;
+  goals_for_count: number;
+  goals_against_count: number;
+}
 export function Ranking() {
-  const rankingInfoRequest = async () => {
+  const rankingInfoRequest = async (): Promise<teamRanking[]> => {
     const response = await fetch(
       "http://localhost:8010/proxy/api/compets/426989/phases/1/poules/1/classement_journees?page=1",
     );
     const json = await response.json();
     return json["hydra:member"];
   };
-  const [rankingList, setRankingList] = useState([]);
+  const [rankingList, setRankingList] = useState<teamRanking[]>([]);
   useEffect(() => {
     async function getData() {
       const rankingInfo = await rankingInfoRequest();

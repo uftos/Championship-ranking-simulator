@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 
+interface District {
+  cg_no: string;
+  name: string;
+}
+
 export function DistrictPicker() {
-  const districtsInfoRequest = async () => {
+  const districtsInfoRequest = async (): Promise<District[]> => {
     const response = await fetch("http://localhost:8010/proxy/api/cdgs");
     const json = await response.json();
     return json["hydra:member"];
   };
-  const [districtList, setDistrictList] = useState([]);
+  const [districtList, setDistrictList] = useState<District[]>([]);
   useEffect(() => {
     async function getData() {
       const districtsInfo = await districtsInfoRequest();
@@ -18,7 +23,6 @@ export function DistrictPicker() {
     <>
       <h1> Choisissez le votre district </h1>
       <select>
-    {console.log(JSON.stringify(districtList))}
         {districtList.map((district) => (
           <option key={district.cg_no}>{district.name}</option>
         ))}
@@ -28,14 +32,14 @@ export function DistrictPicker() {
 }
 
 export function ChampionshipPicker() {
-  const championshipInfoRequest = async () => {
+  const championshipInfoRequest = async (): Promise<District[]> => {
     const response = await fetch(
       "http://localhost:8010/proxy/api/compets?cg_no=24&competition_type=CH&groups[]=compet_light",
     );
     const json = await response.json();
     return json;
   };
-  const [championshipList, setChampionshipList] = useState([]);
+  const [championshipList, setChampionshipList] = useState<District[]>([]);
   useEffect(() => {
     async function getData() {
       const championshipInfo = await championshipInfoRequest();
@@ -56,14 +60,14 @@ export function ChampionshipPicker() {
 }
 
 export function PoolPicker() {
-  const poolInfoRequest = async () => {
+  const poolInfoRequest = async (): Promise<District[]> => {
     const response = await fetch(
       "http://localhost:8010/proxy/api/compets?cg_no=24&competition_type=CH&groups[]=compet_light",
     );
     const json = await response.json();
     return json;
   };
-  const [poolList, setPoolList] = useState([]);
+  const [poolList, setPoolList] = useState<District[]>([]);
   useEffect(() => {
     async function getData() {
       const poolInfo = await poolInfoRequest();
