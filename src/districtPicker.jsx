@@ -4,7 +4,7 @@ export function DistrictPicker() {
   const districtsInfoRequest = async () => {
     const response = await fetch("http://localhost:8010/proxy/api/cdgs");
     const json = await response.json();
-    return json;
+    return json["hydra:member"];
   };
   const [districtList, setDistrictList] = useState([]);
   useEffect(() => {
@@ -18,6 +18,7 @@ export function DistrictPicker() {
     <>
       <h1> Choisissez le votre district </h1>
       <select>
+    {console.log(JSON.stringify(districtList))}
         {districtList.map((district) => (
           <option key={district.cg_no}>{district.name}</option>
         ))}
