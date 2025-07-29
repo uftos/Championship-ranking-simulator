@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-interface teamRanking {
+export interface teamRanking {
   equipe: {
     short_name: string;
   };
   point_count: number;
   goals_for_count: number;
   goals_against_count: number;
+  penalty_point_count: number;
 }
 export function Ranking() {
   const rankingInfoRequest = async (): Promise<teamRanking[]> => {

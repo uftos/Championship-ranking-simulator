@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   DistrictPicker,
@@ -7,9 +7,22 @@ import {
   PoolPicker,
 } from "./districtPicker";
 import { Ranking } from "./ranking";
-import { Games } from "./games.jsx";
+import { GamesComponant, Game } from "./games.jsx";
+import { SelectDay } from "./selectDay";
+import { gamesAPICall } from "./scraping";
 
 export default function App() {
+
+  // code to place after poolPicker when the season restart
+  const [gamesList, setGamesList] = useState<Game[]>([]);
+  useEffect(() => {
+    async function getData() {
+      const gamesInfo = await gamesAPICall();
+      setGamesList(gamesInfo);
+    }
+    getData();
+  }, []);
+
   return (
     <>
       <DistrictPicker />
@@ -21,7 +34,8 @@ export default function App() {
         affiché{" "}
       </h1>
       <Ranking />
-      <Games />
+      <SelectDay currentDay="22" />
+      <GamesComponant gamesList={gamesList} />
     </>
   );
 }
