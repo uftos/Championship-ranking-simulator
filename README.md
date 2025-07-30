@@ -5,12 +5,8 @@ A tools for the french amator football club to know toward the end of the season
 The website is build with react and requesting the fff api client side
 
 ## Launch
-There is a cors policy on the data so you need to launch a cors proxy
-`sudo npm install -g local-cors-proxy`
-`lcp --proxyUrl https://api-dofa.fff.fr/`
-
-`npm install`
-`npm run dev`
+`pnpm install`
+`pnpm dev:all`
 
 ## Todo
 - pick a championship
