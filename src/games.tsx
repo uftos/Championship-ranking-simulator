@@ -17,11 +17,10 @@ interface PropsGamesComponant {
 export function GamesComponant(props: PropsGamesComponant) {
   const gamesList = props.gamesList;
 
-
   return (
     <>
       {gamesList.map((gameInfo, index) => (
-        <GameComponent gameInfo={gameInfo} indice={index} handleChangeHome={handleChangeHome} handleChangeAway={handleChangeAway} key={index} />
+        <GameComponent gameInfo={gameInfo} indice={index} key={index} />
       ))}
     </>
   );
@@ -32,8 +31,6 @@ type HandleChangeType = (event: React.ChangeEvent<HTMLInputElement>, indice: num
 interface GameProps {
   gameInfo: Game; // The gameInfo prop
   indice: number;
-  handleChangeHome: HandleChangeType;
-  handleChangeAway: HandleChangeType;
 }
 
 function GameComponent(props: GameProps) {
@@ -42,8 +39,8 @@ function GameComponent(props: GameProps) {
     <>
       <div>
         <span> {gameInfo.team_home} </span>
-        <span> <input type="text" size="3" defaultValue={gameInfo.home_score} onChange={(e) => props.handleChangeHome(e, props.indice)}/> </span>
-        <span> <input type="text" size="3" defaultValue={gameInfo.away_score} onChange={(e) => props.handleChangeAway(e, props.indice)}/> </span>
+        <span> <input type="text" size="3" defaultValue={gameInfo.home_score} /> </span>
+        <span> <input type="text" size="3" defaultValue={gameInfo.away_score} /> </span>
         <span> {gameInfo.team_away} </span>
       </div>
     </>
