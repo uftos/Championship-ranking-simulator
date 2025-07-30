@@ -35,18 +35,28 @@ interface GameProps {
 function GameComponent(props: GameProps) {
   const gameInfo = props["gameInfo"];
   const changeScoreFunc = useContext(changeScoreFuncContext);
-  
+
   return (
     <>
       <div>
         <span> {gameInfo.team_home} </span>
         <span>
           {" "}
-          <input type="text" size="3" defaultValue={gameInfo.home_score} onChange={(e) => changeScoreFunc[0](e, props.indice)} />{" "}
+          <input
+            type="text"
+            size="3"
+            defaultValue={gameInfo.home_score}
+            onChange={(e) => changeScoreFunc[0](e, props.indice)}
+          />{" "}
         </span>
         <span>
           {" "}
-          <input type="text" size="3" defaultValue={gameInfo.away_score} onChange={(e) => changeScoreFunc[0](e, props.indice)} />{" "}
+          <input
+            type="text"
+            size="3"
+            defaultValue={gameInfo.away_score}
+            onChange={(e) => changeScoreFunc[0](e, props.indice)}
+          />{" "}
         </span>
         <span> {gameInfo.team_away} </span>
       </div>

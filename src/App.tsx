@@ -12,11 +12,11 @@ import { GamesComponant, Game } from "./games.jsx";
 import { SelectDay } from "./selectDay";
 import { gamesAPICall, rankingAPICall } from "./scraping";
 import { computeChampionship } from "./computeRanking";
-import { useMap } from 'usehooks-ts';
+import { useMap } from "usehooks-ts";
 
 interface Score {
-   home_score: number;
-   away_score: number;
+  home_score: number;
+  away_score: number;
 }
 
 export default function App() {
@@ -46,7 +46,7 @@ export default function App() {
     event: React.ChangeEvent<HTMLInputElement>,
     indice: number,
   ) => {
-    var scoreToUpdate = scoreModif.get(indice);
+    let scoreToUpdate = scoreModif.get(indice);
     if (!scoreToUpdate) {
       scoreToUpdate = {
         home_score: 0,
@@ -54,13 +54,13 @@ export default function App() {
       };
     }
     scoreToUpdate.home_score = Number(event.currentTarget.value);
-    actionScoreModif.set(indice, scoreToUpdate); 
+    actionScoreModif.set(indice, scoreToUpdate);
   };
   const handleChangeAway = (
     event: React.ChangeEvent<HTMLInputElement>,
     indice: number,
   ) => {
-    var scoreToUpdate = scoreModif.get(indice);
+    let scoreToUpdate = scoreModif.get(indice);
     if (!scoreToUpdate) {
       scoreToUpdate = {
         home_score: 0,
@@ -68,13 +68,16 @@ export default function App() {
       };
     }
     scoreToUpdate.away_score = Number(event.currentTarget.value);
-    actionScoreModif.set(indice, scoreToUpdate); 
+    actionScoreModif.set(indice, scoreToUpdate);
   };
   const changeScoreFunc = useContext(changeScoreFuncContext);
   changeScoreFunc[0] = handleChangeHome;
   changeScoreFunc[1] = handleChangeAway;
 
-  const ranking = useMemo(() => computeChampionship(gamesList, scoreModif, rankingList), [scoreModif]);
+  const ranking = useMemo(
+    () => computeChampionship(gamesList, scoreModif, rankingList),
+    [scoreModif],
+  );
   return (
     <>
       <DistrictPicker />

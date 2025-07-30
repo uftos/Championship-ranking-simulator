@@ -5,4 +5,3 @@ type HandleChangeType = (
   indice: number,
 ) => void;
 export const changeScoreFuncContext = createContext<HandleChangeType[]>([]);
-
