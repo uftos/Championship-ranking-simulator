@@ -1,5 +1,6 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { changeScoreFuncContext } from "./context";
 
 import {
   DistrictPicker,
@@ -10,6 +11,13 @@ import { Ranking, teamRanking } from "./ranking";
 import { GamesComponant, Game } from "./games.jsx";
 import { SelectDay } from "./selectDay";
 import { gamesAPICall, rankingAPICall } from "./scraping";
+
+interface ScoreModif {
+ [index: number] : {
+   home_score: number;
+   away_score: number;
+ }
+}
 
 export default function App() {
   // code to place after poolPicker when the season restart
@@ -31,24 +39,38 @@ export default function App() {
     getRanking();
   }, []);
 
-  /*
-type HandleChangeType = (
-  event: React.ChangeEvent<HTMLInputElement>,
-  indice: number,
-) => void;
+  const [scoreModif, setScoreModif] = useState<ScoreModif>({});
+
+  //TODO use just one function to don't have default score if the modif doesn't exist
   const handleChangeHome = (
     event: React.ChangeEvent<HTMLInputElement>,
     indice: number,
   ) => {
-    gamesList[indice].home_score = Number(event.currentTarget.value);
+    if (!scoreModif[indice]) {
+      scoreModif[indice] = {
+        home_score: 0,
+        away_score: 0,
+      };
+    }
+    scoreModif[indice].home_score = Number(event.currentTarget.value);
+    setScoreModif(scoreModif);
   };
   const handleChangeAway = (
     event: React.ChangeEvent<HTMLInputElement>,
     indice: number,
   ) => {
-    gamesList[indice].away_score = Number(event.currentTarget.value);
+    if (!scoreModif[indice]) {
+      scoreModif[indice] = {
+        home_score: 0,
+        away_score: 0,
+      };
+    }
+    scoreModif[indice].away_score = Number(event.currentTarget.value);
+    setScoreModif(scoreModif);
   };
-  */
+  const changeScoreFunc = useContext(changeScoreFuncContext);
+  changeScoreFunc[0] = handleChangeHome;
+  changeScoreFunc[1] = handleChangeAway;
 
   return (
     <>
