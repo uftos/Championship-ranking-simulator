@@ -10,18 +10,25 @@ export interface Game {
   day: number;
 }
 
-export function GamesComponant(gameList: Game[]) {
+interface PropsGamesComponant {
+  gamesList: Game[];
+}
+
+export function GamesComponant(props: PropsGamesComponant) {
+  const gamesList = props.gamesList;
+  console.log(JSON.stringify(gamesList));
 
   const handleChangeHome = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
-    gameList[indice].home_score = Number(event.currentTarget.value);
+    gamesList[indice].home_score = Number(event.currentTarget.value);
   };
   const handleChangeAway = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
-    gameList[indice].away_score = Number(event.currentTarget.value);
+    gamesList[indice].away_score = Number(event.currentTarget.value);
   };
+  console.log(JSON.stringify(gamesList));
 
   return (
     <>
-      {gameList.map((gameInfo, index) => (
+      {gamesList.map((gameInfo, index) => (
         <GameComponent gameInfo={gameInfo} indice={index} handleChangeHome={handleChangeHome} handleChangeAway={handleChangeAway} key={index} />
       ))}
     </>
@@ -39,14 +46,13 @@ interface GameProps {
 
 function GameComponent(props: GameProps) {
   const gameInfo = props["gameInfo"];
-  console.log("gameComponent");
   return (
     <>
       <div>
-        <div> {gameInfo.team_home} </div>
-        <div> {gameInfo.team_away} </div>
-        <div> <input type="text" size="3" defaultValue={gameInfo.home_score} onChange={(e) => props.handleChangeHome(e, props.indice)}/> </div>
-        <div> <input type="text" size="3" defaultValue={gameInfo.away_score} onChange={(e) => props.handleChangeAway(e, props.indice)}/> </div>
+        <span> {gameInfo.team_home} </span>
+        <span> <input type="text" size="3" defaultValue={gameInfo.home_score} onChange={(e) => props.handleChangeHome(e, props.indice)}/> </span>
+        <span> <input type="text" size="3" defaultValue={gameInfo.away_score} onChange={(e) => props.handleChangeAway(e, props.indice)}/> </span>
+        <span> {gameInfo.team_away} </span>
       </div>
     </>
   );

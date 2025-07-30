@@ -16,11 +16,11 @@ export default function App() {
   // code to place after poolPicker when the season restart
   const [gamesList, setGamesList] = useState<Game[]>([]);
   useEffect(() => {
-    async function getData() {
+    async function getMatch() {
       const gamesInfo = await gamesAPICall();
       setGamesList(gamesInfo);
     }
-    getData();
+    getMatch();
   }, []);
 
   return (
