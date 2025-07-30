@@ -24,9 +24,11 @@ export function DistrictPicker() {
     <>
       <h1> Choisissez le votre district </h1>
       <select>
-        {districtList ? (districtList.map((district) => (
-          <option key={district.cg_no}>{district.name}</option>
-        ))) : (
+        {districtList ? (
+          districtList.map((district) => (
+            <option key={district.cg_no}>{district.name}</option>
+          ))
+        ) : (
           <option key="network"> Probleme de reseau </option>
         )}
       </select>

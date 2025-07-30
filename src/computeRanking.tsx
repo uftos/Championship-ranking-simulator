@@ -8,10 +8,19 @@ export function computeChampionship(
   ranking: TeamRanking[],
 ): TeamRanking {
   console.log("recompute");
+  console.log(ranking);
+
+  for (const [key] of Object.entries(ranking)) {
+    ranking[key].point_count = -ranking[key].penalty_point_count;
+  }
+  /*
   ranking.forEach((teamRanking: TeamRanking) => {
     teamRanking.point_count = -teamRanking.penalty_point_count;
+    console.log(teamRanking.point_count);
   });
+  */
 
+  /*
   listGame.forEach((game: Game) => {
     if (game.home_score !== null) {
       if (game.home_score > game.away_score) {
@@ -47,5 +56,6 @@ export function computeChampionship(
       }
     }
   });
+  */
   return ranking;
 }

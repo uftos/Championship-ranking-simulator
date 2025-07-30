@@ -1,5 +1,5 @@
 import { Game } from "./games.jsx";
-import { teamRanking } from "./ranking";
+import { TeamRanking } from "./ranking";
 
 interface GameJson {
   home: {
@@ -54,10 +54,31 @@ export const gamesAPICall = async (): Promise<Game[]> => {
   return gamesInfo;
 };
 
+export interface TeamRankingJson {
+  equipe: {
+    short_name: string;
+  };
+  point_count: number;
+  goals_for_count: number;
+  goals_against_count: number;
+  penalty_point_count: number;
+}
+
 export const rankingAPICall = async (): Promise<teamRanking[]> => {
   const response = await fetch(
     "http://localhost:8010/proxy/api/compets/426989/phases/1/poules/1/classement_journees?page=1",
   );
   const json = await response.json();
-  return json["hydra:member"];
+  return json["hydra:member"].reduce(
+    (accumulator: TeamRanking, team: TeamRankingJson) => {
+      accumulator[team.equipe.short_name] = {
+        point_count: team.point_count,
+        goals_for_count: team.goals_for_count,
+        goals_against_count: team.goals_against_count,
+        penalty_point_count: team.penalty_point_count,
+      };
+      return accumulator;
+    },
+    {},
+  );
 };

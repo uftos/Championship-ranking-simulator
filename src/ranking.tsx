@@ -1,17 +1,16 @@
 import React from "react";
 
-export interface teamRanking {
-  equipe: {
-    short_name: string;
+export interface TeamRanking {
+  [name: string]: {
+    point_count: number;
+    goals_for_count: number;
+    goals_against_count: number;
+    penalty_point_count: number;
   };
-  point_count: number;
-  goals_for_count: number;
-  goals_against_count: number;
-  penalty_point_count: number;
 }
 
 interface RankingProps {
-  rankingList: teamRanking[];
+  rankingList: TeamRanking;
 }
 
 export function Ranking(props: RankingProps) {
@@ -27,11 +26,11 @@ export function Ranking(props: RankingProps) {
           </tr>
         </thead>
         <tbody>
-          {rankingList.map((team, index) => (
+          {Object.entries(rankingList).map(([teamName, stats], index) => (
             <tr key={index}>
-              <th scope="row">{team.equipe.short_name}</th>
-              <td>{team.point_count}</td>
-              <td>{team.goals_for_count - team.goals_against_count}</td>
+              <th scope="row">{teamName}</th>
+              <td>{stats.point_count}</td>
+              <td>{stats.goal_difference}</td>
             </tr>
           ))}
         </tbody>

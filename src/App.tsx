@@ -76,8 +76,11 @@ export default function App() {
 
   const ranking = useMemo(
     () => computeChampionship(gamesList, scoreModif, rankingList),
-    [scoreModif],
+    [scoreModif, gamesList],
   );
+
+  const actualDay = Math.max(...gamesList.map((game) => game.day));
+
   return (
     <>
       <DistrictPicker />
@@ -89,7 +92,7 @@ export default function App() {
         affiché{" "}
       </h1>
       <Ranking rankingList={ranking} />
-      <SelectDay currentDay="22" />
+      <SelectDay currentDay={actualDay} />
       <GamesComponant gamesList={gamesList} />
     </>
   );
