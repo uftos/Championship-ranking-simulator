@@ -1,10 +1,13 @@
 import TeamRanking from "./ranking";
 import Game from "./games";
+import { ScoreModif } from "./App";
 
 export function computeChampionship(
   listGame: Game[],
+  scoreModif: ScoreModif,
   ranking: TeamRanking[],
 ): TeamRanking {
+  console.log("recompute");
   ranking.forEach((teamRanking: TeamRanking) => {
     teamRanking.point_count = -teamRanking.penalty_point_count;
   });
@@ -44,4 +47,5 @@ export function computeChampionship(
       }
     }
   });
+  return ranking;
 }
