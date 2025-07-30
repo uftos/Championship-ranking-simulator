@@ -1,4 +1,5 @@
 import { Game } from "./games.jsx";
+import { teamRanking } from "./ranking";
 
 interface GameJson {
   home: {
@@ -52,3 +53,11 @@ export const gamesAPICall = async (): Promise<Game[]> => {
   }
   return gamesInfo;
 };
+
+export const rankingAPICall = async (): Promise<teamRanking[]> => {
+    const response = await fetch(
+      "http://localhost:8010/proxy/api/compets/426989/phases/1/poules/1/classement_journees?page=1",
+    );
+    const json = await response.json();
+    return json["hydra:member"];
+  };

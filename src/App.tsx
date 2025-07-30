@@ -6,10 +6,10 @@ import {
   ChampionshipPicker,
   PoolPicker,
 } from "./districtPicker";
-import { Ranking } from "./ranking";
+import { Ranking, teamRanking } from "./ranking";
 import { GamesComponant, Game } from "./games.jsx";
 import { SelectDay } from "./selectDay";
-import { gamesAPICall } from "./scraping";
+import { gamesAPICall, rankingAPICall } from "./scraping";
 
 export default function App() {
 
@@ -23,6 +23,22 @@ export default function App() {
     getMatch();
   }, []);
 
+  const [rankingList, setRankingList] = useState<teamRanking[]>([]);
+  useEffect(() => {
+    async function getRanking() {
+      const rankingInfo = await rankingAPICall();
+      setRankingList(rankingInfo);
+    }
+    getRanking();
+  }, []);
+
+  const handleChangeHome = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
+    gamesList[indice].home_score = Number(event.currentTarget.value);
+  };
+  const handleChangeAway = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
+    gamesList[indice].away_score = Number(event.currentTarget.value);
+  };
+
   return (
     <>
       <DistrictPicker />
@@ -33,7 +49,7 @@ export default function App() {
         En attendant le debut de saison, la poule 1 de la D1 du calvados sera
         affiché{" "}
       </h1>
-      <Ranking />
+      <Ranking rankingList={rankingList} />
       <SelectDay currentDay="22" />
       <GamesComponant gamesList={gamesList} />
     </>

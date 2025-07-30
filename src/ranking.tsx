@@ -9,22 +9,13 @@ export interface teamRanking {
   goals_against_count: number;
   penalty_point_count: number;
 }
-export function Ranking() {
-  const rankingInfoRequest = async (): Promise<teamRanking[]> => {
-    const response = await fetch(
-      "http://localhost:8010/proxy/api/compets/426989/phases/1/poules/1/classement_journees?page=1",
-    );
-    const json = await response.json();
-    return json["hydra:member"];
-  };
-  const [rankingList, setRankingList] = useState<teamRanking[]>([]);
-  useEffect(() => {
-    async function getData() {
-      const rankingInfo = await rankingInfoRequest();
-      setRankingList(rankingInfo);
-    }
-    getData();
-  }, []);
+
+interface RankingProps {
+  rankingList: teamRanking[];
+}
+
+export function Ranking(props: RankingProps) {
+  const rankingList = props.rankingList;
   return (
     <>
       <table>
