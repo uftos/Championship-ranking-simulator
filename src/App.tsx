@@ -12,7 +12,6 @@ import { SelectDay } from "./selectDay";
 import { gamesAPICall, rankingAPICall } from "./scraping";
 
 export default function App() {
-
   // code to place after poolPicker when the season restart
   const [gamesList, setGamesList] = useState<Game[]>([]);
   useEffect(() => {
@@ -32,12 +31,24 @@ export default function App() {
     getRanking();
   }, []);
 
-  const handleChangeHome = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
+  /*
+type HandleChangeType = (
+  event: React.ChangeEvent<HTMLInputElement>,
+  indice: number,
+) => void;
+  const handleChangeHome = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    indice: number,
+  ) => {
     gamesList[indice].home_score = Number(event.currentTarget.value);
   };
-  const handleChangeAway = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
+  const handleChangeAway = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    indice: number,
+  ) => {
     gamesList[indice].away_score = Number(event.currentTarget.value);
   };
+  */
 
   return (
     <>

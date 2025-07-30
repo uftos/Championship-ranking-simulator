@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 export interface Game {
   team_home: string;
@@ -26,8 +26,6 @@ export function GamesComponant(props: PropsGamesComponant) {
   );
 }
 
-type HandleChangeType = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => void;
-
 interface GameProps {
   gameInfo: Game; // The gameInfo prop
   indice: number;
@@ -39,8 +37,14 @@ function GameComponent(props: GameProps) {
     <>
       <div>
         <span> {gameInfo.team_home} </span>
-        <span> <input type="text" size="3" defaultValue={gameInfo.home_score} /> </span>
-        <span> <input type="text" size="3" defaultValue={gameInfo.away_score} /> </span>
+        <span>
+          {" "}
+          <input type="text" size="3" defaultValue={gameInfo.home_score} />{" "}
+        </span>
+        <span>
+          {" "}
+          <input type="text" size="3" defaultValue={gameInfo.away_score} />{" "}
+        </span>
         <span> {gameInfo.team_away} </span>
       </div>
     </>
