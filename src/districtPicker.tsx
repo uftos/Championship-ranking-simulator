@@ -8,6 +8,7 @@ interface District {
 export function DistrictPicker() {
   const districtsInfoRequest = async (): Promise<District[]> => {
     const response = await fetch("http://localhost:8010/proxy/api/cdgs");
+    //const response = await fetch("http://localhost:8010/proxy/api/cdgs");
     const json = await response.json();
     return json["hydra:member"];
   };
@@ -23,9 +24,11 @@ export function DistrictPicker() {
     <>
       <h1> Choisissez le votre district </h1>
       <select>
-        {districtList.map((district) => (
+        {districtList ? (districtList.map((district) => (
           <option key={district.cg_no}>{district.name}</option>
-        ))}
+        ))) : (
+          <option key="network"> Probleme de reseau </option>
+        )}
       </select>
     </>
   );
