@@ -16,15 +16,7 @@ interface PropsGamesComponant {
 
 export function GamesComponant(props: PropsGamesComponant) {
   const gamesList = props.gamesList;
-  console.log(JSON.stringify(gamesList));
 
-  const handleChangeHome = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
-    gamesList[indice].home_score = Number(event.currentTarget.value);
-  };
-  const handleChangeAway = (event: React.ChangeEvent<HTMLInputElement>, indice: number) => {
-    gamesList[indice].away_score = Number(event.currentTarget.value);
-  };
-  console.log(JSON.stringify(gamesList));
 
   return (
     <>
