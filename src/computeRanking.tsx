@@ -11,51 +11,25 @@ export function computeChampionship(
   console.log(ranking);
 
   for (const [key] of Object.entries(ranking)) {
+    console.log("key", key, "dict", ranking, "access", ranking[key]);
     ranking[key].point_count = -ranking[key].penalty_point_count;
   }
-  /*
-  ranking.forEach((teamRanking: TeamRanking) => {
-    teamRanking.point_count = -teamRanking.penalty_point_count;
-    console.log(teamRanking.point_count);
-  });
-  */
 
-  /*
   listGame.forEach((game: Game) => {
     if (game.home_score !== null) {
       if (game.home_score > game.away_score) {
         // Home team wins
-        const winningRanking = ranking.find(
-          (teamRanking) => teamRanking.team_name === game.home_team,
-        );
-        if (winningRanking) {
-          winningRanking.point_count += 3; // Add 3 points for the win
-        }
+        console.log(ranking[game.team_home] !== undefined);
+        console.log(game.team_home);
+        ranking[game.team_home] += 3;
       } else if (game.away_score > game.home_score) {
-        const winningRanking = ranking.find(
-          (teamRanking) => teamRanking.team_name === game.team_away,
-        );
-        if (winningRanking) {
-          winningRanking.point_count += 3; // Add 3 points for the win
-        }
+        ranking[game.team_away] += 3;
       } else {
         // It's a draw
-        const homeRanking = ranking.find(
-          (teamRanking) => teamRanking.team_name === game.homeTeam,
-        );
-        const awayRanking = ranking.find(
-          (teamRanking) => teamRanking.team_name === game.awayTeam,
-        );
-
-        if (homeRanking) {
-          homeRanking.point_count += 1; // Add 1 point for the draw
-        }
-        if (awayRanking) {
-          awayRanking.point_count += 1; // Add 1 point for the draw
-        }
+        ranking[game.team_home] += 1;
+        ranking[game.team_away] += 1;
       }
     }
   });
-  */
   return ranking;
 }
