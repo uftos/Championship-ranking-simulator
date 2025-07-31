@@ -7,7 +7,7 @@ import {
   ChampionshipPicker,
   PoolPicker,
 } from "./districtPicker";
-import { Ranking, teamRanking } from "./ranking";
+import { Ranking, TeamRanking } from "./ranking";
 import { GamesComponant, Game } from "./games.jsx";
 import { SelectDay } from "./selectDay";
 import { gamesAPICall, rankingAPICall } from "./scraping";
@@ -30,7 +30,7 @@ export default function App() {
     getMatch();
   }, []);
 
-  const [rankingList, setRankingList] = useState<teamRanking[]>([]);
+  const [rankingList, setRankingList] = useState<TeamRanking[]>([]);
   useEffect(() => {
     async function getRanking() {
       const rankingInfo = await rankingAPICall();
@@ -55,6 +55,7 @@ export default function App() {
     }
     scoreToUpdate.home_score = Number(event.currentTarget.value);
     actionScoreModif.set(indice, scoreToUpdate);
+    console.log("changescore");
   };
   const handleChangeAway = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -69,6 +70,7 @@ export default function App() {
     }
     scoreToUpdate.away_score = Number(event.currentTarget.value);
     actionScoreModif.set(indice, scoreToUpdate);
+    console.log("changescore");
   };
   const changeScoreFunc = useContext(changeScoreFuncContext);
   changeScoreFunc[0] = handleChangeHome;

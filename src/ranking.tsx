@@ -30,7 +30,7 @@ export function Ranking(props: RankingProps) {
             <tr key={index}>
               <th scope="row">{teamName}</th>
               <td>{stats.point_count}</td>
-              <td>{stats.goal_difference}</td>
+              <td>{stats.goals_for_count - stats.goals_against_count}</td>
             </tr>
           ))}
         </tbody>

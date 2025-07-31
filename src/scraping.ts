@@ -66,16 +66,16 @@ export interface TeamRankingJson {
 
 export const rankingAPICall = async (): Promise<teamRanking[]> => {
   const response = await fetch(
-    "http://localhost:8010/proxy/api/compets/426989/phases/1/poules/1/classement_journees?page=1",
+    "http://localhost:8010/proxy/api/compets/426990/phases/1/poules/1/classement_journees?page=1",
   );
   const json = await response.json();
   return json["hydra:member"].reduce(
     (accumulator: TeamRanking, team: TeamRankingJson) => {
       accumulator[team.equipe.short_name] = {
-        point_count: team.point_count,
-        goals_for_count: team.goals_for_count,
-        goals_against_count: team.goals_against_count,
-        penalty_point_count: team.penalty_point_count,
+        point_count: Number(team.point_count),
+        goals_for_count: Number(team.goals_for_count),
+        goals_against_count: Number(team.goals_against_count),
+        penalty_point_count: Number(team.penalty_point_count),
       };
       return accumulator;
     },
