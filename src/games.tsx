@@ -16,6 +16,8 @@ export type Game = {
   teamAway: Team;
   score: Score;
   day: number;
+  index: number;
+  date: Date;
 };
 
 interface PropsGamesComponant {
@@ -28,7 +30,7 @@ export function GamesComponant(props: PropsGamesComponant) {
   return (
     <>
       {gamesList.map((gameInfo, index) => (
-        <GameComponent gameInfo={gameInfo} indice={index} key={index} />
+        <GameComponent gameInfo={gameInfo} key={index} />
       ))}
     </>
   );
@@ -36,7 +38,6 @@ export function GamesComponant(props: PropsGamesComponant) {
 
 interface GameProps {
   gameInfo: Game; // The gameInfo prop
-  indice: number;
 }
 
 function GameComponent(props: GameProps) {
@@ -52,7 +53,9 @@ function GameComponent(props: GameProps) {
           <input
             type="text"
             size="3"
-            onChange={(e) => context.scoreChange(e, props.indice, "home")}
+            onChange={(e) =>
+              context.scoreChange(e, props.gameInfo.index, "home")
+            }
           />{" "}
         </span>
         <span>
@@ -60,7 +63,9 @@ function GameComponent(props: GameProps) {
           <input
             type="text"
             size="3"
-            onChange={(e) => context.scoreChange(e, props.indice, "away")}
+            onChange={(e) =>
+              context.scoreChange(e, props.gameInfo.index, "away")
+            }
           />{" "}
         </span>
         <span> {gameInfo.teamAway.name} </span>

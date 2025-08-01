@@ -75,6 +75,7 @@ export default function App() {
 
   const gameToDisplay = useMemo(() => {
     return gamesList.filter((game) => game.day > day);
+    //.sort((a: Game, b: Game) => a.date.getTime() - b.date.getTime());
   }, [gamesList, scoreModif, day]);
 
   return (

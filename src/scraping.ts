@@ -19,6 +19,7 @@ interface GameJson {
   poule_journee: {
     number: number;
   };
+  date: string;
 }
 
 export const gamesAPICall = async (): Promise<Game[]> => {
@@ -48,6 +49,8 @@ export const gamesAPICall = async (): Promise<Game[]> => {
               goalsAway: game.away_score,
             },
             day: game.poule_journee.number,
+            date: Date.parse(game.date),
+            index: null,
           };
         }),
       );
@@ -56,7 +59,12 @@ export const gamesAPICall = async (): Promise<Game[]> => {
       stillGame = false;
     }
   }
-  return gamesInfo;
+  const gamesInfoWithIndex = gamesInfo.map((item, index) => ({
+    ...item, // spread the existing properties
+    index: index, // add the index property
+  }));
+
+  return gamesInfoWithIndex;
 };
 
 export interface TeamRankingJson {
