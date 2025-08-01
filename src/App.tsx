@@ -63,13 +63,15 @@ export default function App() {
     [gamesList],
   );
 
+  const [day, setDay] = useState<number>(22);
+
   const ranking = useMemo(
-    () => computeChampionship(gamesList, scoreModif, rankingList),
-    [scoreModif, gamesList],
+    () => computeChampionship(gamesList, scoreModif, rankingList, day),
+    [scoreModif, gamesList, day],
   );
 
   //const [day, setDay] = useState<number>(Math.max(...gamesList.map((game) => game.day)));
-  const [day, setDay] = useState<number>(21);
+  const maxDay: number = useMemo(() => getMaxDay(gamesList), [gamesList]);
 
   const gameToDisplay = useMemo(() => {
     return gamesList.filter((game) => game.day > day);
@@ -86,10 +88,20 @@ export default function App() {
         affiché{" "}
       </h1>
       <Ranking rankingList={ranking} />
-      <SelectDay currentDay={day} setDay={setDay} />
+      <SelectDay currentDay={maxDay} setDay={setDay} />
       <ChangeScoreFuncContext value={{ scoreChange: handleScoreChange }}>
         <GamesComponant gamesList={gameToDisplay} />
       </ChangeScoreFuncContext>
     </>
   );
+}
+
+function getMaxDay(gamesList: Game[]): number {
+  if (gamesList.length === 0) {
+    return 0;
+  }
+  const maxDayGame = gamesList.reduce((maxGame, currentGame) => {
+    return currentGame.day > maxGame.day ? currentGame : maxGame;
+  });
+  return maxDayGame.day;
 }

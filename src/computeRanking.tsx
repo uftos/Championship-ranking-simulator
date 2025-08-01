@@ -6,6 +6,7 @@ export function computeChampionship(
   listGame: Game[],
   scoreModif: ScoreModif,
   ranking: TeamRanking,
+  day: number,
 ): TeamRanking {
   console.log("recompute");
   ranking = resetRanking(ranking);
@@ -15,7 +16,9 @@ export function computeChampionship(
       console.log("modif");
       addMatchToRanking(scoreModif.get(index), ranking);
     } else {
-      addMatchToRanking(game, ranking);
+      if (game.day <= day) {
+        addMatchToRanking(game, ranking);
+      }
     }
   });
   return ranking;
