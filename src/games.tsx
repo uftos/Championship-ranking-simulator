@@ -52,7 +52,6 @@ function GameComponent(props: GameProps) {
           <input
             type="text"
             size="3"
-            defaultValue={gameInfo.score.goalsHome}
             onChange={(e) => context.scoreChange(e, props.indice, "home")}
           />{" "}
         </span>
@@ -61,7 +60,6 @@ function GameComponent(props: GameProps) {
           <input
             type="text"
             size="3"
-            defaultValue={gameInfo.score.goalsAway}
             onChange={(e) => context.scoreChange(e, props.indice, "away")}
           />{" "}
         </span>
