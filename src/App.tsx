@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ChangeScoreFuncContext } from "./context";
 
 import {
@@ -37,35 +37,43 @@ export default function App() {
   const [scoreModif, actionScoreModif] = useMap<number, Game>([]);
 
   //TODO use just one function to don't have default score if the modif doesn't exist
-  const handleScoreChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    indice: number,
-    homeOrAway: string, //"home" or "away"
-  ) => {
-    let gameToUpdate = scoreModif.get(indice);
-    if (!gameToUpdate) {
-      gameToUpdate = {
-        ...gamesList[indice],
-        score: { goalsHome: 0, goalsAway: 0 },
-      };
-      console.log("og", gamesList, indice);
-    }
-    //TODO add error handling
-    if (homeOrAway == "home") {
-      gameToUpdate.score.goalsHome = Number(event.currentTarget.value);
-    }
-    if (homeOrAway == "away") {
-      gameToUpdate.score.goalsAway = Number(event.currentTarget.value);
-    }
-    actionScoreModif.set(indice, gameToUpdate);
-  };
+  const handleScoreChange = useCallback(
+    (
+      event: React.ChangeEvent<HTMLInputElement>,
+      indice: number,
+      homeOrAway: string, //"home" or "away"
+    ) => {
+      let gameToUpdate = scoreModif.get(indice);
+      if (!gameToUpdate) {
+        gameToUpdate = {
+          ...gamesList[indice],
+          score: { goalsHome: 0, goalsAway: 0 },
+        };
+        console.log("og", gamesList, indice);
+      }
+      //TODO add error handling
+      if (homeOrAway == "home") {
+        gameToUpdate.score.goalsHome = Number(event.currentTarget.value);
+      }
+      if (homeOrAway == "away") {
+        gameToUpdate.score.goalsAway = Number(event.currentTarget.value);
+      }
+      actionScoreModif.set(indice, gameToUpdate);
+    },
+    [gamesList],
+  );
 
   const ranking = useMemo(
     () => computeChampionship(gamesList, scoreModif, rankingList),
     [scoreModif, gamesList],
   );
 
-  const actualDay = Math.max(...gamesList.map((game) => game.day));
+  //const [day, setDay] = useState<number>(Math.max(...gamesList.map((game) => game.day)));
+  const [day, setDay] = useState<number>(21);
+
+  const gameToDisplay = useMemo(() => {
+    return gamesList.filter((game) => game.day > day);
+  }, [gamesList, scoreModif, day]);
 
   return (
     <>
@@ -78,9 +86,9 @@ export default function App() {
         affiché{" "}
       </h1>
       <Ranking rankingList={ranking} />
-      <SelectDay currentDay={actualDay} />
+      <SelectDay currentDay={day} setDay={setDay} />
       <ChangeScoreFuncContext value={{ scoreChange: handleScoreChange }}>
-        <GamesComponant gamesList={gamesList} />
+        <GamesComponant gamesList={gameToDisplay} />
       </ChangeScoreFuncContext>
     </>
   );
