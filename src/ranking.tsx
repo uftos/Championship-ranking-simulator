@@ -6,6 +6,7 @@ export interface TeamRanking {
     goals_for_count: number;
     goals_against_count: number;
     penalty_point_count: number;
+    probabilities?: number[];
   };
 }
 
@@ -31,6 +32,10 @@ export function Ranking(props: RankingProps) {
               <th scope="row">{teamName}</th>
               <td>{stats.point_count}</td>
               <td>{stats.goals_for_count - stats.goals_against_count}</td>
+              {stats.probabilities &&
+                stats.probabilities.map((probability, index) => (
+                  <td key={index}> {probability} </td>
+                ))}
             </tr>
           ))}
         </tbody>
