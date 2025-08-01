@@ -49,15 +49,9 @@ export default function App() {
           ...gamesList[indice],
           score: { goalsHome: 0, goalsAway: 0 },
         };
-        console.log("og", gamesList, indice);
       }
-      //TODO add error handling
-      if (homeOrAway == "home") {
-        gameToUpdate.score.goalsHome = Number(event.currentTarget.value);
-      }
-      if (homeOrAway == "away") {
-        gameToUpdate.score.goalsAway = Number(event.currentTarget.value);
-      }
+      gameToUpdate.score[homeOrAway === "home" ? "goalsHome" : "goalsAway"] =
+        Number(event.currentTarget.value);
       actionScoreModif.set(indice, gameToUpdate);
     },
     [gamesList],
@@ -104,7 +98,9 @@ function getMaxDay(gamesList: Game[]): number {
   }
   const maxDay = gamesList.reduce(
     (maxDay, currentGame) =>
-      currentGame.day > maxDay ? currentGame.day : maxDay,
+      currentGame.score.goalsHome != null && currentGame.day > maxDay
+        ? currentGame.day
+        : maxDay,
     0,
   );
   console.log(maxDay);
