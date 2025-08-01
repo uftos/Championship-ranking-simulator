@@ -1,15 +1,22 @@
 import React, { useContext } from "react";
-import { changeScoreFuncContext } from "./context";
+import { ChangeScoreFuncContext } from "./context";
 
-export interface Game {
-  team_home: string;
-  team_away: string;
-  logo_home: string;
-  logo_away: string;
-  home_score: number;
-  away_score: number;
+export type Team = {
+  name: string;
+  logo: string;
+};
+
+export type Score = {
+  goalsHome: number;
+  goalsAway: number;
+};
+
+export type Game = {
+  teamHome: Team;
+  teamAway: Team;
+  score: Score;
   day: number;
-}
+};
 
 interface PropsGamesComponant {
   gamesList: Game[];
@@ -34,19 +41,19 @@ interface GameProps {
 
 function GameComponent(props: GameProps) {
   const gameInfo = props["gameInfo"];
-  const changeScoreFunc = useContext(changeScoreFuncContext);
+  const context = useContext(ChangeScoreFuncContext);
 
   return (
     <>
       <div>
-        <span> {gameInfo.team_home} </span>
+        <span> {gameInfo.teamHome.name} </span>
         <span>
           {" "}
           <input
             type="text"
             size="3"
-            defaultValue={gameInfo.home_score}
-            onChange={(e) => changeScoreFunc[0](e, props.indice)}
+            defaultValue={gameInfo.score.goalsHome}
+            onChange={(e) => context.scoreChange(e, props.indice, "home")}
           />{" "}
         </span>
         <span>
@@ -54,11 +61,11 @@ function GameComponent(props: GameProps) {
           <input
             type="text"
             size="3"
-            defaultValue={gameInfo.away_score}
-            onChange={(e) => changeScoreFunc[0](e, props.indice)}
+            defaultValue={gameInfo.score.goalsAway}
+            onChange={(e) => context.scoreChange(e, props.indice, "away")}
           />{" "}
         </span>
-        <span> {gameInfo.team_away} </span>
+        <span> {gameInfo.teamAway.name} </span>
       </div>
     </>
   );

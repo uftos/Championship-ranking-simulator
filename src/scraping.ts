@@ -35,17 +35,22 @@ export const gamesAPICall = async (): Promise<Game[]> => {
       gamesInfo = gamesInfo.concat(
         json["hydra:member"].map((game: GameJson) => {
           return {
-            team_home: game.home.short_name,
-            team_away: game.away.short_name,
-            logo_home: game.home.club.logo,
-            logo_away: game.away.club.logo,
-            home_score: game.home_score,
-            away_score: game.away_score,
+            teamHome: {
+              name: game.home.short_name,
+              logo: game.home.club.logo,
+            },
+            teamAway: {
+              name: game.away.short_name,
+              logo: game.away.club.logo,
+            },
+            score: {
+              goalsHome: game.home_score,
+              goalsAway: game.away_score,
+            },
             day: game.poule_journee.number,
           };
         }),
       );
-
       page++;
     } else {
       stillGame = false;
@@ -64,7 +69,7 @@ export interface TeamRankingJson {
   penalty_point_count: number;
 }
 
-export const rankingAPICall = async (): Promise<teamRanking[]> => {
+export const rankingAPICall = async (): Promise<TeamRanking> => {
   const response = await fetch(
     "http://localhost:8010/proxy/api/compets/426990/phases/1/poules/1/classement_journees?page=1",
   );

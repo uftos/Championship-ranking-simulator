@@ -1,6 +1,6 @@
 import "./App.css";
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { changeScoreFuncContext } from "./context";
+import React, { useState, useEffect, useMemo } from "react";
+import { ChangeScoreFuncContext } from "./context";
 
 import {
   DistrictPicker,
@@ -14,11 +14,6 @@ import { gamesAPICall, rankingAPICall } from "./scraping";
 import { computeChampionship } from "./computeRanking";
 import { useMap } from "usehooks-ts";
 
-interface Score {
-  home_score: number;
-  away_score: number;
-}
-
 export default function App() {
   // code to place after poolPicker when the season restart
   const [gamesList, setGamesList] = useState<Game[]>([]);
@@ -30,7 +25,7 @@ export default function App() {
     getMatch();
   }, []);
 
-  const [rankingList, setRankingList] = useState<TeamRanking[]>([]);
+  const [rankingList, setRankingList] = useState<TeamRanking>();
   useEffect(() => {
     async function getRanking() {
       const rankingInfo = await rankingAPICall();
@@ -39,42 +34,31 @@ export default function App() {
     getRanking();
   }, []);
 
-  const [scoreModif, actionScoreModif] = useMap<number, Score>([]);
+  const [scoreModif, actionScoreModif] = useMap<number, Game>([]);
 
   //TODO use just one function to don't have default score if the modif doesn't exist
-  const handleChangeHome = (
+  const handleScoreChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     indice: number,
+    homeOrAway: string, //"home" or "away"
   ) => {
-    let scoreToUpdate = scoreModif.get(indice);
-    if (!scoreToUpdate) {
-      scoreToUpdate = {
-        home_score: 0,
-        away_score: 0,
+    let gameToUpdate = scoreModif.get(indice);
+    if (!gameToUpdate) {
+      gameToUpdate = {
+        ...gamesList[indice],
+        score: { goalsHome: 0, goalsAway: 0 },
       };
+      console.log("og", gamesList, indice);
     }
-    scoreToUpdate.home_score = Number(event.currentTarget.value);
-    actionScoreModif.set(indice, scoreToUpdate);
-    console.log("changescore");
-  };
-  const handleChangeAway = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    indice: number,
-  ) => {
-    let scoreToUpdate = scoreModif.get(indice);
-    if (!scoreToUpdate) {
-      scoreToUpdate = {
-        home_score: 0,
-        away_score: 0,
-      };
+    //TODO add error handling
+    if (homeOrAway == "home") {
+      gameToUpdate.score.goalsHome = Number(event.currentTarget.value);
     }
-    scoreToUpdate.away_score = Number(event.currentTarget.value);
-    actionScoreModif.set(indice, scoreToUpdate);
-    console.log("changescore");
+    if (homeOrAway == "away") {
+      gameToUpdate.score.goalsAway = Number(event.currentTarget.value);
+    }
+    actionScoreModif.set(indice, gameToUpdate);
   };
-  const changeScoreFunc = useContext(changeScoreFuncContext);
-  changeScoreFunc[0] = handleChangeHome;
-  changeScoreFunc[1] = handleChangeAway;
 
   const ranking = useMemo(
     () => computeChampionship(gamesList, scoreModif, rankingList),
@@ -95,7 +79,9 @@ export default function App() {
       </h1>
       <Ranking rankingList={ranking} />
       <SelectDay currentDay={actualDay} />
-      <GamesComponant gamesList={gamesList} />
+      <ChangeScoreFuncContext value={{ scoreChange: handleScoreChange }}>
+        <GamesComponant gamesList={gamesList} />
+      </ChangeScoreFuncContext>
     </>
   );
 }
