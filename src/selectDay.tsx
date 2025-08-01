@@ -13,9 +13,9 @@ export function SelectDay(props: SelectDayProps) {
 
   return (
     <>
-      <select onChange={handleChange} selected={props.currentDay}>
+      <select onChange={handleChange}>
         {Array.from({ length: props.currentDay }, (_, i) => i + 1).map((el) => (
-          <option key={el} value={el}>
+          <option key={el} value={el} selected={el === props.currentDay}>
             {" "}
             Journée {el}{" "}
           </option>

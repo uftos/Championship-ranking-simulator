@@ -98,11 +98,15 @@ export default function App() {
 }
 
 function getMaxDay(gamesList: Game[]): number {
+  console.log("compute max day");
   if (gamesList.length === 0) {
     return 0;
   }
-  const maxDayGame = gamesList.reduce((maxGame, currentGame) => {
-    return currentGame.day > maxGame.day ? currentGame : maxGame;
-  });
-  return maxDayGame.day;
+  const maxDay = gamesList.reduce(
+    (maxDay, currentGame) =>
+      currentGame.day > maxDay ? currentGame.day : maxDay,
+    0,
+  );
+  console.log(maxDay);
+  return maxDay;
 }
