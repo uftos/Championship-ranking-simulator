@@ -21,8 +21,14 @@ export function computeChampionship(
       }
     }
   });
+  sortRanking(ranking);
   return ranking;
 }
+/* eslint-disable */
+function sortRanking(ranking: TeamRanking) {
+  //ranking.sort((a: TeamRanking, b: TeamRanking) => a.point_count - b.point_count);
+}
+/* eslint-enable */
 
 function resetRanking(ranking: TeamRanking) {
   if (ranking !== undefined) {
