@@ -11,10 +11,10 @@ The website is build with react and requesting the fff api client side
 ## Todo
 - pick a championship
     - waiting for the season to start to have access to the normal api
-- render all information
-- compute the ranking and the probability
-- Edit score function
-- Choose the day to go back in time
+- ~~render all information~~
+- ~~compute the ranking~~ and the probability
+- ~~Edit score function~~
+- ~~Choose the day to go back in time~~
 - Button to put same score on the outward and return journey
 - Button reinitialize
 - stylizing with a react componant librairy
