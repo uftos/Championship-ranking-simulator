@@ -45,6 +45,9 @@ export default function App() {
     ) => {
       let gameToUpdate = scoreModif.get(indice);
       if (!gameToUpdate) {
+        console.log("reset modif");
+        console.log(indice);
+        console.log(scoreModif);
         gameToUpdate = {
           ...gamesList[indice],
           score: { goalsHome: 0, goalsAway: 0 },
@@ -54,7 +57,7 @@ export default function App() {
         Number(event.currentTarget.value);
       actionScoreModif.set(indice, gameToUpdate);
     },
-    [gamesList],
+    [gamesList, actionScoreModif],
   );
 
   const [day, setDay] = useState<number>(22);
