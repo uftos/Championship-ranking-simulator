@@ -22,6 +22,8 @@ export function computeChampionship(
     }
   });
   sortRanking(ranking);
+  //TODO initiate teamPointPossibilities
+  computePossibilities(gameToplay, teamPointPossibilities);
   return ranking;
 }
 /* eslint-disable */
@@ -63,4 +65,44 @@ function addMatchToRanking(game: Game, ranking: TeamRanking) {
 }
 function checkHaveBeenplayed(game: Game) {
   return game.score.goalsHome !== null;
+}
+
+interface TeamPoint {
+  [name: string]: {
+    point: number;
+  };
+}
+// recursive
+function computePossibilities(
+  gameToPlay: Game[],
+  teamPointPossibilities: TeamPoint,
+): TeamPoint[] {
+  let allPossibilities: TeamPoint[];
+  if (gameToPlay.length > 0) {
+    const game = gameToPlay[0];
+    gameToPlay = gameToPlay.slice(1);
+    //victory
+    const teamPointPossibilitiesVictory = teamPointPossibilities.copy();
+    teamPointPossibilitiesVictory[game.teamHome].point += 3;
+    allPossibilities = computePossibilities(
+      gameToPlay,
+      teamPointPossibilitiesVictory,
+    );
+    //draw
+    const teamPointPossibilitiesDraw = teamPointPossibilities.copy();
+    teamPointPossibilitiesDraw[game.teamHome].point += 1;
+    teamPointPossibilitiesDraw[game.teamAway].point += 1;
+    allPossibilities.append(
+      computePossibilities(gameToPlay, teamPointPossibilitiesDraw),
+    );
+    //lost
+    const teamPointPossibilitiesDefeat = teamPointPossibilities.copy();
+    teamPointPossibilitiesDefeat[game.teamAway].point += 3;
+    allPossibilities.append(
+      computePossibilities(gameToPlay, teamPointPossibilitiesDefeat),
+    );
+  } else {
+    allPossibilities = teamPointPossibilities;
+  }
+  return allPossibilities;
 }
